@@ -1,0 +1,7 @@
+{% if request.user.usuario.is_utp %}
+{% include "dashboard/dashboard/utp.html" %}
+{% elif request.user.usuario.is_profesor %}
+{% include "dashboard/dashboard/profesor.html" %}
+{% elif request.user.usuario.is_alumno %}
+{% include "dashboard/dashboard/alumno.html" %}
+{% endif %}

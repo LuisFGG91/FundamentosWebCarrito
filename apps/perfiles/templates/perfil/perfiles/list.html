@@ -1,0 +1,92 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Importaciones {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link type="text/css" href="{% static 'alumno_assets/jquery/css/jquery-confirm.min.css' %}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+    <div class="d-block mb-4 mb-md-0">
+        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+            <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                <li class="breadcrumb-item">
+                    <a href="#">
+                        <svg class="icon icon-xxs" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
+            </ol>
+        </nav>
+        <h2 class="h4">Usuarios</h2>
+        <p class="mb-0">Ficha de datos correspondientes al alumno antes de matricular</p>
+    </div>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{% url 'usuarios' 'new' %}" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
+            <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+            New Usuario
+        </a>
+        <div class="btn-group ms-2 ms-lg-3">
+            <button type="button" class="btn btn-sm btn-outline-gray-600">Export</button>
+        </div>
+    </div>
+</div>     
+    <p class="mb-0">Listado de Usuarios</p>
+    <div class="card card-body border-light shadow-md table-wrapper table-responsive pt-0">
+        <br>
+            <table class="table table-hover" id = "tableusuarios" >
+                <thead>
+                <tr>
+                    <th>Rut</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Telefono</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>+</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% if usuarios %}
+                        {% for usuario in usuarios %}
+                            <tr class="item-row">
+                                <td class="font-weight-normal">{{ usuario.usuario.rut }}</td>
+                                <td class="font-weight-normal">{{ usuario.usuario.user.first_name }}</td>
+                                <td class="font-weight-normal">{{ usuario.usuario.user.last_name }}</td>
+                                <td class="font-weight-normal">{{ usuario.usuario.phone }}</td>
+                                <td class="font-weight-normal">{{ usuario.usuario.fecha_nacimiento }}</td>
+                                <td class="font-weight-normal">
+                                        <div class="btn-group">
+                                            <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="icon icon-sm">
+                                                    <span class="fas fa-ellipsis-h icon-dark"></span>
+                                                </span>
+                                                <span class="visually-hidden">Toggle Dropdown</span>
+                                            </button>
+                                            <div class="dropdown-menu py-0">
+                                                <a class="dropdown-item rounded-top" href="#"><span class="fas fa-eye me-2"></span>View Details</a>
+                                                <a class="dropdown-item" href="{% url 'usuarios' 'editar' alumno.id %}"><span class="fas fa-edit me-2"></span>Edit</a>
+                                                <a class="dropdown-item text-danger rounded-bottom" href="#"><span class="fas fa-trash-alt me-2"></span>Remove</a>
+                                            </div>
+                                        </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+    </div>
+{% endif %}
+
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script type="application/javascript" src="{% static 'alumno_assets/jquery/js/jquery-3.3.1.min.js' %}"></script>
+<script type="application/javascript" src="{% static 'alumno_assets/jquery/js/jquery-confirm.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'alumno_assets/jquery/cookie/jquery.cookie.js' %}"></script>
+<script type="application/javascript" src="{% static 'alumno_assets/js/notify.js' %}"></script>
+<script type="application/javascript" src="{% static 'alumno_assets/js/alumno_js.js' %}"></script>
+{% endblock javascripts %}

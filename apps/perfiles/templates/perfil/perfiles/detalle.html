@@ -1,0 +1,189 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+{% endblock stylesheets %}
+
+{% block title %} Detalle Movimientos {% endblock %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+        <div class="preloader bg-soft flex-column justify-content-center align-items-center">
+            <img class="loader-element animate__animated animate__jackInTheBox"
+                 src="{% static 'assets/img/brand/light.svg' %}" height="60" alt="Volt logo">
+        </div>
+
+        <div class="py-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                    <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'importaciones' %}">Importaciones</a></li>
+                    <li class="breadcrumb-item"><a href="#">Detalle</a></li>
+                </ol>
+            </nav>
+            <h1 class="h4">Movimientos</h1>
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-light shadow-sm components-section">
+                        <div class="card-body">     
+                            <div class="row mb-4">
+                                {% if encabezadoImp.enc is not True %}
+                                    {% for encabezado in encabezadoImp.enc %} 
+                                    <div class="col-lg-4 col-sm-6">
+                                        <!-- Form -->
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput">Tipo de Movimientos</label>
+                                            <input value = "{{ encabezado.0 }}" type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input" disabled="">
+                                        </div>
+                                        <!-- End of Form -->
+                                        <!-- Form -->
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput">Centro Costo</label>
+                                            <input value = "{{ encabezado.3 }}" type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input" disabled="">
+                                        </div>
+                                        <!-- End of Form -->
+                                        <!-- Form -->
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput">Moneda</label>
+                                            <input value = "{{ encabezado.7 }}" type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input" disabled="">
+                                        </div>
+                                        <!-- End of Form -->
+                                        <!-- Form -->
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput">Items</label>
+                                            <input value = "{{ encabezado.10 }}" type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input" disabled="">
+                                        </div>
+                                        <!-- End of Form -->            
+                                        <!-- Form -->
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput">Error</label>
+                                            <div class="form-control" >
+                                                <p class="text-danger mb-0">
+                                                    {{ encabezado.12 }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!-- End of Form -->                                                                                
+                                     </div>
+                                    <div class="col-lg-4 col-sm-6">
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput">Codigo Proveedor</label>
+                                            <input value = "{{ encabezado.1 }}"  type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input" disabled="">
+                                        </div>
+                                        <!-- End of Form -->
+                                        <!-- Form -->
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput">Fecha Proceso</label>
+                                            <input value = "{{ encabezado.4|date:"Y-m-d" }}"  type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input" disabled="">
+                                        </div>
+                                        <!-- End of Form -->
+                                        <!-- Form -->
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput">Lisactiva</label>
+                                            <input value = "{{ encabezado.8 }}"  type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input" disabled="">
+                                        </div>
+                                        <!-- End of Form -->
+                                        <!-- Form -->
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput">Fecha Error</label>
+                                            <input value = "{{ encabezado.13 }}"  type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input" disabled="">
+                                        </div>
+                                        <!-- End of Form -->
+                                    </div>
+                                    <div class="col-lg-4 col-sm-6">
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput">Numero de Documento</label>
+                                            <input value = "{{ encabezado.2 }}" type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input" disabled="">
+                                        </div>
+                                        <!-- Form -->
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput">Estado</label>
+                                            <input value = "{{ encabezado.5 }}" type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input" disabled="">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="disabledTextInput">Sucursal Empresa</label>
+                                            <input value = "{{ encabezado.9 }}" type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input" disabled="">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="textarea">Tipo de Error</label>
+                                            <div class="form-control" >
+                                                <p class="text-primary mb-0">
+                                                    {{ encabezado.11 }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!-- End of Form -->
+                                    </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>        
+        <div class="row item-row">
+            <div class="col-12">
+                <div class="card card-body bg-white border-light shadow-sm mb-4">
+                    <h2 class="h5 mb-4">Detalle</h2>
+                     <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0">
+                        <table class="table table-hover" id="dataDetalleImportaciones">
+                            <thead>
+                            <tr>
+                                <th>Codigo Mercaderia</th>
+                                <th>Descripcion Mercaderia</th>
+                                <th>Cantidad</th>
+                                <th>Valor Unitario</th>
+                                <th>Valor Total</th>
+                                <th>Bodega</th>
+                                <th>Centro Costo</th>
+                                <th>Numero Pedido</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                                {% if detallesImp.det is not True %}
+                                {% for detalles in detallesImp.det %}
+                                <tr class="item-row" 
+                                        <td><span class="font-weight-bold"></span></td>
+                                        <td><span class="font-weight-normal">{{ detalles.2 }}</span></td>
+                                        <td><span class="font-weight-normal">{{ detalles.3 }}</span></td>
+                                        <td><span class="font-weight-normal">{{ detalles.4 }}</span></td>
+                                        <td><span class="font-weight-normal">{{ detalles.5 }}</span></td>
+                                        <td><span class="font-weight-normal">{{ detalles.6 }}</span></td>
+                                        <td><span class="font-weight-normal">{{ detalles.7 }}</span></td>
+                                        <td><span class="font-weight-normal">{{ detalles.8 }}</span></td>
+                                        <td><span class="font-weight-normal">{{ detalles.9 }}</span></td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'includes/footer.html' %}
+        {% endif  %}
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script type="application/javascript" src="{% static 'doct_assets/jquery/js/jquery-3.3.1.min.js' %}"></script>
+<script type="application/javascript" src="{% static 'doct_assets/jquery/js/jquery-confirm.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'doct_assets/jquery/cookie/jquery.cookie.js' %}"></script>
+<script type="application/javascript" src="{% static 'doct_assets/js/notify.js' %}"></script>
+<script type="application/javascript" src="{% static 'doct_assets/js/doct_js.js' %}"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
+
+
+{% endblock javascripts %}
