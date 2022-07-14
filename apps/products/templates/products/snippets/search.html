@@ -1,0 +1,15 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <!-- le pertence a a la aplicacion products, archivo urls.py -->
+      <form action="{% url 'products:search' %}">
+        <div class="input-group">
+          <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Buscar...">
+          <div class="inout-group-append">
+            <input type="submit" name="" value="Buscar" class="btn btn-primary">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

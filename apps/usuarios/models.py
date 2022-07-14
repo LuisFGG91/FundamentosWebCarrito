@@ -57,16 +57,18 @@ class Usuario(models.Model):
         if self.imageBanner:
             return'{}'.format(self.imageBanner)
         return'{}{}'.format(MEDIA_URL_USUARIO,'teams/logo.png')
-class VendedorProfile(models.Model):
-    user=models.OneToOneField(Usuario, on_delete=models.CASCADE)
-    autorizado_by = models.ForeignKey(Usuario, related_name='autorizado_by_%(class)s_related', on_delete=models.CASCADE)
+
+class Customer(User):
     class Meta:
-        db_table = 'users_profesor_profile'  
-        verbose_name = 'ProfesorProfile'
-        verbose_name_plural = 'ProfesorProfiles'
-class CompradorProfile(models.Model):
-    user=models.OneToOneField(Usuario, on_delete=models.CASCADE)
-    class Meta:
-        db_table = 'users_alumno_profile'  
-        verbose_name = 'AlumnosProfile'
-        verbose_name_plural = 'AlumnosProfiles'
+        proxy = True
+#retornar todos los productos adquiridos por el cliente
+    def get_products(self):
+        #retornamos una lista vacia
+        return []
+
+#si tenemos la necesidad de agregar nuevos campos y atrubutos osbre el modelo user, generamos una relacion uno a uno
+#creamos un nuevo modelo
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)#CUANDO UN USUARIO SEA ELIMINADO TAMBIEN SE ELIMINE EL REGISTRO PROFILE
+    bio = models.TextField()
+

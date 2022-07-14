@@ -1,0 +1,75 @@
+<!--vista carrito de compras-->
+
+{% extends 'base.html' %}
+{% load cart_extras %}
+{% load product_extras %}
+
+{% block content%}
+<!-- el carrito de compras posee productos?-->
+  {% if cart.products.exists %}
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <table class="table mt-3">
+            <thead>
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col"> </th>
+                <th scope="col"> </th>
+                <th scope="col"> Cantidad </th>
+                <th scope="col"> Precio </th>
+              </tr>
+            </thead>
+            <tbody>
+              <!--wueremos obtener todos los productos del carrito de cokpras-->
+              <!--Para agregar cantidad de productos, ver video agregar cantidad si no quedo claro -->
+              {% for cp in cart.products_related %}
+                {% with product=cp.product %}
+                <tr>
+                  <th>{{ forloop.counter }}</th>
+                  <th>
+                    <!-- el producto tiene image? -->
+                    {% if product.image %}
+                      <img src="{{ product.image.url }}" alt="Imagen">
+                    {% endif %}
+                  </th>
+                  <th>
+                    <a href="{% url 'products:product' product.slug %}"> {{ product.title }}</a>
+                    <!--link para eliminar de remove.html-->
+                    {% include 'carts/snippets/remove.html'%}
+                  </th>
+                  <th>{{ cp.quantity }}</th>
+                  <th>
+                    <span class="font-weight-bold text-danger">{{product.price  }}</span>
+                  </th>
+                </tr>
+                {% endwith %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <!-- Mostramos el precio -->
+        <div class="col-4">
+          <div class="card mt-3">
+            <div class="card-body">
+              <div class="font-weight-bold">
+                Subtotal({{ cart.products.count }}): <span class="text-danger">{{ cart.subtotal  }}</span>
+              </div>
+              <div class="mt-2">
+                <!-- nombre aplicacion:nombre ruta-->
+                <a href="{% url 'orders:order' %}" class="btn btn-warning"> Proceder al pago </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- si el carrito no tiene ningun producto, entonces-->
+{% else %}
+  <div class="col">
+    <p class="h3"> Tu carrito de compras esta vacio</p>
+    <!--rederigimos al listado de productos-->
+    <a href="{% url 'index' %}"> Seguir comprando</a>
+  </div>
+  {% endif %}
+{%endblock%}

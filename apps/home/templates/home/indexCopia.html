@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
@@ -5,7 +6,6 @@
       {#imprimimos el valor de la variable, que esta en el archivo views.py #}
 
 
-      {% include 'products/snippets/search.html'%}
       <!-- Carousel -->
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -13,12 +13,16 @@
           <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
           <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
         </ol>
-        <div class="carousel-inner mt-3">
+        <div class="carousel-inner">
           <div class="carousel-item active">
-            {% load static %}
-            <img src="{% static '/images/imagen3.jpg' %}" class="d-block w-100" alt="...">
+            <img src='static/images/imagen1.jpg' class="d-block w-100" alt="..." >
           </div>
-
+          <div class="carousel-item">
+            <img src='static/images/imagen1.jpg' class="d-block w-100" alt="..." >
+          </div>
+          <div class="carousel-item">
+            <img src='static/images/imagen3.jpg' class="d-block w-100" alt="..." >
+          </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -34,12 +38,28 @@
 
       <!-- Inicio Playera --->
     <div class="col">
-      <h4 class="text-center mt-3">{{message}}</h4>
+      <div class="container">
+      <!-- ciclo for para listar los productos , variable productos del archivo views.py-->
+        <ul class="list-group">
+          <!-- nombre que tu deseas, nombre de la variable-->
+          {% for products in product_list %}
+            <li class="list-group-item">
+              {{ products.title }}
 
-        <!-- nombre que tu deseas, nombre de la variable-->
-        {% include 'products/snippets/list.html'%}
+              <span class="text-success">${{ products.price }}</span>
 
+            </li>
+            {% endfor %}
+        </ul>
+      </div>
     </div>
+
+            <!--{% if products.Stock %}
+              <span class="text-success">Disponible</span>
+            {% else %}
+            <span class="text-danger">No Disponible</span>
+            {% endif %}-->
+
 
     <!--</div>-->
 {% endblock %}

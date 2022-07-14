@@ -1,0 +1,14 @@
+<!-- Nos muestra la descripcion de los productos en el index Productos -->
+<div class="card h-100">
+  {% if product.image %}
+    <img src="{{ product.image.url }}" alt="">
+  {%endif%}
+
+  <div class="card-body">
+    <h5 class=card-title> {{ product.title }}</h5>
+    <!--<p class="card-text"> {{ product.description}}</p>-->
+    <!-- nombre de la aplicacion:nombre de la ruta-->
+    <a href="{% url 'products:product' product.slug %}" class="btn btn-primary"> Ver mas </a>
+  </div>
+
+</div>
