@@ -14,7 +14,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 #Hola Mundo - Video
-from . import views
+from apps import views
 
 #importamos la clase
 from products.views import ProductListView
@@ -33,9 +33,9 @@ urlpatterns = [
     path('productos',ProductListView.as_view(), name='index'),
     path('admin/', admin.site.urls),
     path('pedidos/pedidoscompletados',views.pedidos, name='pedidos'), #creamos ruta para 'acerca de'
-    path('productos/', include('products.urls')),#url del archivo productos, vamos a poder hacer uso de la ruta producto
-    path('carrito/', include('carts.urls')),#url del archivo productos, vamos a poder hacer uso de la ruta producto
-    path('orden/', include('orders.urls')),#url del archivo productos, vamos a poder hacer uso de la ruta producto
+    path('productos/', include('apps.products.urls')),#url del archivo productos, vamos a poder hacer uso de la ruta producto
+    path('carrito/', include('apps.carts.urls')),#url del archivo productos, vamos a poder hacer uso de la ruta producto
+    path('orden/', include('apps.orders.urls')),#url del archivo productos, vamos a poder hacer uso de la ruta producto
 
 
 ] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
